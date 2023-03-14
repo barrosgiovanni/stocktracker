@@ -1,10 +1,17 @@
 import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import DashboardPage from "./pages/DashboardPage";
+import StockPage from "./pages/StockPage";
 
 function App() {
   return (
-    <div className="App">
-      <h2>Homepage</h2>
-      <h4>welcome home</h4>
+    <div className="app container">
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<DashboardPage />} />
+          <Route path='/stock/:stock' element={<StockPage />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
