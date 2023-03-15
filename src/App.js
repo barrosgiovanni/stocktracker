@@ -4,6 +4,7 @@ import DashboardPage from "./pages/DashboardPage";
 import StockPage from "./pages/StockPage";
 
 function App() {
+
   return (
     <div className="app container">
       <BrowserRouter>
