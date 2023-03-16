@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from "react";
 import finnHub from '../apis/finnHub';
+import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
 function StockList() {
 
@@ -36,7 +37,7 @@ function StockList() {
         }
 
       } catch (error) {
-
+        console.log(error);
       }
 
     }
@@ -47,19 +48,27 @@ function StockList() {
 
   }, []);
 
+
+
   const renderStocks = stocks.map((stock) => {
+
     return (
         <tr className='table-row' key={stock.symbol}>
           <th scope='row'>{stock.symbol}</th>
           <td>{stock.c}</td>
-          {stock.d > 0 ? <td className='text-success'>{stock.d}</td> : <td className='text-danger'>{stock.d}</td>}
-          {stock.d > 0 ? <td className='text-success'>{stock.d}</td> : <td className='text-danger'>{stock.dp}%</td>}
+          {stock.d >= 0 ?
+            <td className='text-success'>{stock.d}<BsFillCaretUpFill /></td> :
+            <td className='text-danger'>{stock.d}<BsFillCaretDownFill /></td>}
+          {stock.d >= 0 ?
+            <td className='text-success'>{stock.dp}<BsFillCaretUpFill /></td> :
+            <td className='text-danger'>{stock.dp}%<BsFillCaretDownFill /></td>}
           <td>{stock.h}</td>
           <td>{stock.l}</td>
           <td>{stock.o}</td>
           <td>{stock.pc}</td>
         </tr>
     )
+
   });
 
   return (
