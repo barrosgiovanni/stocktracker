@@ -14,7 +14,9 @@ function SearchBar() {
 
   useEffect(() => {
 
-    const fetchData = async () => {
+    let isMounted = true;
+
+    const fetchSearchData = async () => {
 
       try {
 
@@ -24,18 +26,36 @@ function SearchBar() {
           }
         });
 
-        console.log(response);
+        if (isMounted) {
+          setSearchList(response.data.result);
+        }
 
       } catch (error) {
         console.log(error);
       }
     }
 
-    fetchData();
+    if (searchTerm.length > 0) {
+      fetchSearchData();
+      return () => isMounted = false;
+    } else {
+      setSearchList([]);
+    }
 
-  }, [searchTerm])
+  }, [searchTerm]);
 
+  const renderSearchResults = searchList.map((result) => {
+    return (
+      <li className='dropdown-item d-flex justify-content-between align-middle' key={result.symbol}>
+        <div>{result.description} ({result.symbol})</div>
+        <button className='btn-add'>+ Add</button>
+      </li>
+    )
+  });
 
+  // const handleShow = () => {
+  //   return searchList.length > 0 ? 'dropdown-menu show' : 'dropdown-menu';
+  // }
 
   return (
     <div className='w-100 p-5 rounded mx-auto d-flex justify-content-center'>
@@ -50,15 +70,8 @@ function SearchBar() {
           placeholder="Which stock would you like to track?">
         </input>
         <label htmlFor='search'>Which stock would you like to track?</label>
-        <ul className='dropdown-menu'>
-          <li>Stock1</li>
-          <li>Stock2</li>
-          <li>Stock3</li>
-          <li>Stock4</li>
-          <li>Stock5</li>
-          <li>Stock6</li>
-          <li>Stock7</li>
-          <li>Stock8</li>
+        <ul className={searchList.length > 0 ? 'dropdown-menu show' : 'dropdown-menu'}>
+          {renderSearchResults}
         </ul>
       </div>
     </div>
