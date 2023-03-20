@@ -31,3 +31,12 @@
   font-size: smaller;
   padding: 4px 8px;
 }
+
+.btn-delete {
+  background-color: rgb(217, 15, 15);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: smaller;
+  padding: 4px 8px;
+}

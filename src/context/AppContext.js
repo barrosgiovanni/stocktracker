@@ -15,6 +15,13 @@ function AppProvider({ children }) {
     setSearchTerm('');
   }
 
+  const deleteFromWatchList = (removedStock) => {
+    const updatedWatchList = watchList.filter((stock) => {
+      return stock !== removedStock
+    });
+    setWatchList(updatedWatchList);
+  }
+
   return (
     <AppContext.Provider
 
@@ -27,7 +34,8 @@ function AppProvider({ children }) {
         setSearchTerm,
         searchList,
         setSearchList,
-        addStockToWatchList
+        addStockToWatchList,
+        deleteFromWatchList
       }}
 
     >

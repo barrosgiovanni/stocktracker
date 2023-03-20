@@ -5,7 +5,7 @@ import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
 function StockList() {
 
-  const { watchList, stocks, setStocks } = useGlobalContext();
+  const { watchList, stocks, setStocks, deleteFromWatchList } = useGlobalContext();
 
   useEffect(() => {
 
@@ -64,6 +64,7 @@ function StockList() {
           <td>{stock.l}</td>
           <td>{stock.o}</td>
           <td>{stock.pc}</td>
+          <td><button className="btn-delete" onClick={() => deleteFromWatchList(stock.symbol)}>- Delete</button></td>
         </tr>
     )
 
