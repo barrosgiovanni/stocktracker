@@ -1,13 +1,11 @@
-import React from 'react';
-import { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useGlobalContext } from "../context/AppContext";
 import finnHub from '../apis/finnHub';
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 
 function StockList() {
 
-  const [stocks, setStocks] = useState([]);
-
-  const [ watchList, setWatchList ] = useState(['GOOGL', 'MSFT', 'AMZN']);
+  const { watchList, stocks, setStocks } = useGlobalContext();
 
   useEffect(() => {
 
@@ -46,7 +44,7 @@ function StockList() {
 
     return () => isMounted = false;
 
-  }, []);
+  }, [watchList]);
 
 
 

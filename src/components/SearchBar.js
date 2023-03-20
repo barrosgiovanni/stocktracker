@@ -1,12 +1,10 @@
-import React from 'react';
-import { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useGlobalContext } from "../context/AppContext";
 import finnHub from "../apis/finnHub";
 
 function SearchBar() {
 
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const [searchList, setSearchList] = useState([]);
+  const {searchTerm, setSearchTerm, searchList, setSearchList, addStockToWatchList} = useGlobalContext();
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
@@ -48,14 +46,10 @@ function SearchBar() {
     return (
       <li className='dropdown-item d-flex justify-content-between align-middle' key={result.symbol}>
         <div>{result.description} ({result.symbol})</div>
-        <button className='btn-add'>+ Add</button>
+        <button className='btn-add' onClick={ () => addStockToWatchList(result.symbol)}>+ Add</button>
       </li>
     )
   });
-
-  // const handleShow = () => {
-  //   return searchList.length > 0 ? 'dropdown-menu show' : 'dropdown-menu';
-  // }
 
   return (
     <div className='w-100 p-5 rounded mx-auto d-flex justify-content-center'>
