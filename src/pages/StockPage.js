@@ -1,11 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import { useGlobalContext } from "../context/AppContext";
 import finnHub from '../apis/finnHub';
+import StockChart from "../components/StockChart";
+
+const formatData = (data) => {
+  return data.t.map((record, index) => {
+    return {
+      x: record * 1000,
+      y: data.c[index]
+    }
+  })
+}
 
 function StockPage() {
 
   const symbol = useParams().stock;
+
+  const [chartData, setChartData] = useState({});
 
   useEffect(() => {
 
@@ -28,56 +40,72 @@ function StockPage() {
       const oneMonthAgo = currentTime - (oneDayTime * 30);
       const oneYearAgo = currentTime - (oneDayTime * 365);
 
-      const responses = await Promise.all([
+      try {
 
-        finnHub.get('stock/candle', {
-          params: {
-            symbol: symbol,
-            from: oneDayAgo,
-            to: currentTime,
-            resolution: 15
-          }
-        }),
+        const responses = await Promise.all([
 
-        finnHub.get('stock/candle', {
-          params: {
-            symbol: symbol,
-            from: oneWeekAgo,
-            to: currentTime,
-            resolution: 60
-          }
-        }),
+          finnHub.get('stock/candle', {
+            params: {
+              symbol: symbol,
+              from: oneDayAgo,
+              to: currentTime,
+              resolution: 15
+            }
+          }),
 
-        finnHub.get('stock/candle', {
-          params: {
-            symbol: symbol,
-            from: oneMonthAgo,
-            to: currentTime,
-            resolution: 'D'
-          }
-        }),
+          finnHub.get('stock/candle', {
+            params: {
+              symbol: symbol,
+              from: oneWeekAgo,
+              to: currentTime,
+              resolution: 60
+            }
+          }),
 
-        finnHub.get('stock/candle', {
-          params: {
-            symbol: symbol,
-            from: oneYearAgo,
-            to: currentTime,
-            resolution: 'W'
-          }
-        })
+          finnHub.get('stock/candle', {
+            params: {
+              symbol: symbol,
+              from: oneMonthAgo,
+              to: currentTime,
+              resolution: 'D'
+            }
+          }),
 
-      ])
+          finnHub.get('stock/candle', {
+            params: {
+              symbol: symbol,
+              from: oneYearAgo,
+              to: currentTime,
+              resolution: 'W'
+            }
+          })
 
-      console.log(responses);
+        ])
+
+        setChartData({
+          day: formatData(responses[0].data),
+          week: formatData(responses[1].data),
+          month: formatData(responses[2].data),
+          year: formatData(responses[3].data)
+        });
+
+      } catch (error) {
+        console.log(error);
+      }
 
     };
 
     fetchData();
 
-  }, []);
+  }, [symbol]);
 
   return (
-    <div>StockPage {symbol}</div>
+    <div>
+      { chartData &&
+      <div>
+        <StockChart chartData={chartData} symbol={symbol}/>
+      </div> }
+    </div>
   )
 }
 
