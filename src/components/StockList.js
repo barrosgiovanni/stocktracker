@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../context/AppContext";
 import finnHub from '../apis/finnHub';
 import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
@@ -6,6 +7,8 @@ import { BsFillCaretDownFill, BsFillCaretUpFill } from "react-icons/bs";
 function StockList() {
 
   const { watchList, stocks, setStocks, deleteFromWatchList } = useGlobalContext();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
 
@@ -46,13 +49,15 @@ function StockList() {
 
   }, [watchList]);
 
-
+  const handleStockSelection = (symbol) => {
+    navigate(`stock/${symbol}`);
+  };
 
   const renderStocks = stocks.map((stock) => {
 
     return (
         <tr className='table-row' key={stock.symbol}>
-          <th scope='row'>{stock.symbol}</th>
+          <th scope='row' onClick={() => handleStockSelection(stock.symbol)}>{stock.symbol}</th>
           <td>{stock.c}</td>
           {stock.d >= 0 ?
             <td className='text-success'>{stock.d}<BsFillCaretUpFill /></td> :
@@ -83,6 +88,7 @@ function StockList() {
             <th scope='col'>Low</th>
             <th scope='col'>Open</th>
             <th scope='col'>Close</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>

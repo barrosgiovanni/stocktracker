@@ -7,6 +7,14 @@
   color: rgb(79, 89, 102);
 }
 
+.table-row:hover {
+  background-color: #fbfafa;
+}
+
+.table-row th {
+  cursor: pointer;
+}
+
 .form-control {
   background-color: rgba(145, 158, 171, 0.05);
   border: 1px solid #e1dfdf;
@@ -39,4 +47,5 @@
   border-radius: 4px;
   font-size: smaller;
   padding: 4px 8px;
+  z-index: 1;
 }
