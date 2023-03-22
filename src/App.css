@@ -49,3 +49,16 @@
   padding: 4px 8px;
   z-index: 1;
 }
+
+.btn-interval {
+  background-color: #fff;
+  /* border: 1px solid black; */
+  font-size: smaller;
+  border-radius: 6px;
+  padding: 4px 8px;
+  margin: 4px;
+}
+
+.btn-interval:hover {
+  background-color: rgba(145, 158, 171, 0.05);
+}
