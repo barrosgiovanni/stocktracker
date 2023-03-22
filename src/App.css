@@ -62,3 +62,13 @@
 .btn-interval:hover {
   background-color: rgba(145, 158, 171, 0.05);
 }
+
+.btn-selected {
+  background-color: #0074d9;
+  color: #fff;
+  border: 2px solid #0074d9;
+  font-size: 14px;
+  border-radius: 6px;
+  padding: 4px 8px;
+  margin: 4px;
+}

@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Chart from "react-apexcharts";
 
 function StockChart({ chartData, symbol }) {
 
   const { day, week, month, year } = chartData;
+  const [interval, setInterval] = useState('24h');
+
+  const defineTimeFormat = () => {
+    switch (interval) {
+      case '24h':
+        return day;
+      case '7d':
+        return week;
+      case '30d':
+        return month;
+      case '365d':
+        return year;
+      default:
+        return day;
+    }
+
+  };
 
   const options = {
     title: {
@@ -30,12 +47,21 @@ function StockChart({ chartData, symbol }) {
         format: 'MMM dd HH:MM'
       }
     }
-  }
+  };
 
   const series = [{
     name: symbol,
-    data: day
-  }]
+    data: defineTimeFormat()
+  }];
+
+  const renderButtonSelection = (button) => {
+    const classes = '';
+    if (button === interval) {
+      return classes + 'btn-selected';
+    } else {
+      return classes + 'btn-interval'
+    }
+  };
 
   return (
     <div className='chart-display mt-5 p-4 shadow-sm'>
@@ -43,12 +69,21 @@ function StockChart({ chartData, symbol }) {
         options={options}
         series={series}
         type='area'
-        width='100%' />
+        width='100%'
+      />
       <div className='interval-buttons mt-3'>
-        <button className='btn-interval'>Day</button>
-        <button className='btn-interval'>Week</button>
-        <button className='btn-interval'>Month</button>
-        <button className='btn-interval'>Year</button>
+        <button
+          onClick={() => setInterval('24h')}
+          className={renderButtonSelection('24h')}>Day</button>
+        <button
+          onClick={() => setInterval('7d')}
+          className={renderButtonSelection('7d')} >Week</button>
+        <button
+          onClick={() => setInterval('30d')}
+          className={renderButtonSelection('30d')} >Month</button>
+        <button
+          onClick={() => setInterval('365d')}
+          className={renderButtonSelection('365d')} >Year</button>
       </div>
     </div>
   )

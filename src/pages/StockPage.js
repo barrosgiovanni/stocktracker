@@ -8,7 +8,7 @@ const formatData = (data) => {
   return data.t.map((record, index) => {
     return {
       x: record * 1000,
-      y: data.c[index]
+      y: Math.floor(data.c[index])
     }
   })
 }
@@ -23,7 +23,7 @@ function StockPage() {
 
     const fetchData = async () => {
 
-      const date = new Date;
+      const date = new Date();
       const currentTime = Math.floor(date.getTime() / 1000);
       const oneDayTime = 60 * 60 * 24;
 
@@ -49,7 +49,7 @@ function StockPage() {
               symbol: symbol,
               from: oneDayAgo,
               to: currentTime,
-              resolution: 15
+              resolution: 5
             }
           }),
 
