@@ -1,26 +1,35 @@
-import React, { useState } from 'react';
+import { useGlobalContext } from "../context/AppContext";
 import Chart from "react-apexcharts";
 
-function StockChart({ chartData, symbol }) {
+function StockChart({ symbol }) {
 
+  const { chartData, interval, setInterval } = useGlobalContext();
   const { day, week, month, year } = chartData;
-  const [interval, setInterval] = useState('24h');
 
   const defineTimeFormat = () => {
     switch (interval) {
-      case '24h':
+      case '1d':
         return day;
-      case '7d':
+      case '1w':
         return week;
-      case '30d':
+      case '1m':
         return month;
-      case '365d':
+      case '1y':
         return year;
       default:
         return day;
     }
-
   };
+
+  const timeFormat = defineTimeFormat();
+
+  // console.log(chartData);
+  // console.log(chartData.day === true || chartData.day === false ? 'true' : 'false');
+
+  // let color = '#fff';
+  // color = defineTimeFormat()[defineTimeFormat().length - 1].y - defineTimeFormat()[0].y > 0 ?
+  // '#26C281' : '#ED3419'
+  // console.log(color);
 
   const options = {
     title: {
@@ -51,7 +60,7 @@ function StockChart({ chartData, symbol }) {
 
   const series = [{
     name: symbol,
-    data: defineTimeFormat()
+    data: timeFormat
   }];
 
   const renderButtonSelection = (button) => {
@@ -64,26 +73,26 @@ function StockChart({ chartData, symbol }) {
   };
 
   return (
-    <div className='chart-display mt-5 shadow-sm'>
+    <div className='chart-display p-4 pb-2 shadow'>
       <Chart
         options={options}
         series={series}
         type='area'
         width='100%'
       />
-      <div className='interval-buttons mt-2'>
+      <div className='interval-buttons mx-3 my-2'>
         <button
-          onClick={() => setInterval('24h')}
-          className={renderButtonSelection('24h')}>Day</button>
+          onClick={() => setInterval('1d')}
+          className={renderButtonSelection('1d')}>Day</button>
         <button
-          onClick={() => setInterval('7d')}
-          className={renderButtonSelection('7d')} >Week</button>
+          onClick={() => setInterval('1w')}
+          className={renderButtonSelection('1w')} >Week</button>
         <button
-          onClick={() => setInterval('30d')}
-          className={renderButtonSelection('30d')} >Month</button>
+          onClick={() => setInterval('1m')}
+          className={renderButtonSelection('1m')} >Month</button>
         <button
-          onClick={() => setInterval('365d')}
-          className={renderButtonSelection('365d')} >Year</button>
+          onClick={() => setInterval('1y')}
+          className={renderButtonSelection('1y')} >Year</button>
       </div>
     </div>
   )

@@ -1,8 +1,10 @@
-import React from 'react';
+import logo from "../images/stocktrackerlogo.png";
 
 function Logo() {
   return (
-    <div>Logo</div>
+    <div className='logo d-flex justify-content-center'>
+      <img src={logo} alt='StockTracker logo' width={350} />
+    </div>
   )
 }
 

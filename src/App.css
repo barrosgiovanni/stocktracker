@@ -3,6 +3,15 @@
   border: 1px solid red;
 }
 
+.table-container {
+  display: flex;
+  justify-content: center;
+}
+
+.table {
+  width: 84%;
+}
+
 .table-head {
   color: rgb(79, 89, 102);
 }
@@ -26,9 +35,13 @@
 
 .dropdown-menu {
   height: 600px;
-  min-width: 384px;
+  min-width: 360px;
   overflow-y: scroll;
   overflow-x: hidden;
+  cursor:default;
+}
+
+.stock-title {
   cursor: pointer;
 }
 

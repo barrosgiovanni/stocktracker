@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
+import { useGlobalContext } from '../context/AppContext';
 import finnHub from '../apis/finnHub';
 import StockChart from "../components/StockChart";
 import { FaArrowCircleLeft } from "react-icons/fa";
@@ -8,7 +9,7 @@ const formatData = (data) => {
   return data.t.map((record, index) => {
     return {
       x: record * 1000,
-      y: Math.floor(data.c[index] * 100) / 100
+      y: Math.floor(data.c[index])
     }
   })
 }
@@ -17,10 +18,9 @@ function StockPage() {
 
   const symbol = useParams().stock;
   const navigate = useNavigate();
-  const [chartData, setChartData] = useState({});
+  const { chartData, setChartData, interval } = useGlobalContext();
 
   useEffect(() => {
-
     const fetchData = async () => {
 
       const date = new Date();
@@ -41,18 +41,15 @@ function StockPage() {
       const oneYearAgo = currentTime - (oneDayTime * 365);
 
       try {
-
         const responses = await Promise.all([
-
           finnHub.get('stock/candle', {
             params: {
               symbol: symbol,
               from: oneDayAgo,
               to: currentTime,
-              resolution: 5
+              resolution: 15
             }
           }),
-
           finnHub.get('stock/candle', {
             params: {
               symbol: symbol,
@@ -61,7 +58,6 @@ function StockPage() {
               resolution: 60
             }
           }),
-
           finnHub.get('stock/candle', {
             params: {
               symbol: symbol,
@@ -70,7 +66,6 @@ function StockPage() {
               resolution: 'D'
             }
           }),
-
           finnHub.get('stock/candle', {
             params: {
               symbol: symbol,
@@ -79,36 +74,30 @@ function StockPage() {
               resolution: 'W'
             }
           })
-
         ])
 
-        setChartData({
+        const updatedChartData = {
+          ...chartData,
           day: formatData(responses[0].data),
           week: formatData(responses[1].data),
           month: formatData(responses[2].data),
           year: formatData(responses[3].data)
-        });
+        }
+        setChartData(updatedChartData);
 
       } catch (error) {
         console.log(error);
       }
-
     };
-
     fetchData();
-
-  }, [symbol], [chartData]);
-
-  // const handleStockSelection = (symbol) => {
-  //   navigate(`stock/${symbol}`);
-  // };
+  }, [symbol], [chartData], [interval]);
 
   return (
     <div>
       { chartData &&
       <div className='chart-container d-flex justify-content-center'>
         <FaArrowCircleLeft className='btn-return' onClick={() => navigate('/')} />
-        <StockChart chartData={chartData} symbol={symbol} />
+        <StockChart symbol={symbol} chartData={chartData} />
       </div> }
     </div>
   )

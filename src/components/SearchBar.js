@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useGlobalContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
 import finnHub from "../apis/finnHub";
@@ -6,7 +6,6 @@ import finnHub from "../apis/finnHub";
 function SearchBar() {
 
   const {searchTerm, setSearchTerm, searchList, setSearchList, addStockToWatchList} = useGlobalContext();
-
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -14,35 +13,27 @@ function SearchBar() {
   }
 
   useEffect(() => {
-
     let isMounted = true;
-
     const fetchSearchData = async () => {
-
       try {
-
         const response = await finnHub.get('/search', {
           params: {
             q: searchTerm
           }
         });
-
         if (isMounted) {
           setSearchList(response.data.result);
         }
-
       } catch (error) {
         console.log(error);
       }
     }
-
     if (searchTerm.length > 0) {
       fetchSearchData();
       return () => isMounted = false;
     } else {
       setSearchList([]);
     }
-
   }, [searchTerm]);
 
   const handleNavigation = (symbol) => {
@@ -51,15 +42,15 @@ function SearchBar() {
 
   const renderSearchResults = searchList.map((result) => {
     return (
-      <li className='dropdown-item d-flex justify-content-between align-middle' onClick={() => handleNavigation(result.symbol)} key={result.symbol}>
-        <div>{result.description} ({result.symbol})</div>
+      <li className='dropdown-item d-flex justify-content-between align-middle' key={result.symbol}>
+        <div className='stock-title' onClick={() => handleNavigation(result.symbol)}>{result.description} ({result.symbol})</div>
         <button className='btn-add' onClick={ () => addStockToWatchList(result.symbol)}>+ Add</button>
       </li>
     )
   });
 
   return (
-    <div className='w-100 p-5 rounded mx-auto d-flex justify-content-center'>
+    <div className='w-100 pb-4 pt-5 rounded mx-auto d-flex justify-content-center'>
       <div className='form-floating dropdown'>
         <input
           id='search'

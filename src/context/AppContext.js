@@ -8,6 +8,8 @@ function AppProvider({ children }) {
   const [stocks, setStocks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchList, setSearchList] = useState([]);
+  const [interval, setInterval] = useState('1d');
+  const [chartData, setChartData] = useState({});
 
   const addStockToWatchList = (newStock) => {
     const updatedWatchList = [...watchList, newStock];
@@ -24,7 +26,6 @@ function AppProvider({ children }) {
 
   return (
     <AppContext.Provider
-
       value= {{
         watchList,
         setWatchList,
@@ -35,10 +36,12 @@ function AppProvider({ children }) {
         searchList,
         setSearchList,
         addStockToWatchList,
-        deleteFromWatchList
-      }}
-
-    >
+        deleteFromWatchList,
+        interval,
+        setInterval,
+        chartData,
+        setChartData
+      }}>
       { children }
     </AppContext.Provider>
   )
