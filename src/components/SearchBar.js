@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
 import { useGlobalContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
 import finnHub from "../apis/finnHub";
 
 function SearchBar() {
 
   const {searchTerm, setSearchTerm, searchList, setSearchList, addStockToWatchList} = useGlobalContext();
+
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
@@ -42,9 +45,13 @@ function SearchBar() {
 
   }, [searchTerm]);
 
+  const handleNavigation = (symbol) => {
+    navigate(`stock/${symbol}`);
+  };
+
   const renderSearchResults = searchList.map((result) => {
     return (
-      <li className='dropdown-item d-flex justify-content-between align-middle' key={result.symbol}>
+      <li className='dropdown-item d-flex justify-content-between align-middle' onClick={() => handleNavigation(result.symbol)} key={result.symbol}>
         <div>{result.description} ({result.symbol})</div>
         <button className='btn-add' onClick={ () => addStockToWatchList(result.symbol)}>+ Add</button>
       </li>

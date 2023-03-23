@@ -1,7 +1,7 @@
 
-/* * {
+* {
   border: 1px solid red;
-} */
+}
 
 .table-head {
   color: rgb(79, 89, 102);
@@ -71,4 +71,17 @@
   border-radius: 6px;
   padding: 4px 8px;
   margin: 4px;
+}
+
+.chart-display {
+  width: 88%;
+  height: 88%;
+}
+
+.btn-return {
+  font-size: 50px;
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  cursor: pointer;
 }

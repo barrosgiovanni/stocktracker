@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from "react-router-dom";
-import { useGlobalContext } from "../context/AppContext";
+import { useParams, useNavigate } from "react-router-dom";
 import finnHub from '../apis/finnHub';
 import StockChart from "../components/StockChart";
+import { FaArrowCircleLeft } from "react-icons/fa";
 
 const formatData = (data) => {
   return data.t.map((record, index) => {
     return {
       x: record * 1000,
-      y: Math.floor(data.c[index])
+      y: Math.floor(data.c[index] * 100) / 100
     }
   })
 }
@@ -16,7 +16,7 @@ const formatData = (data) => {
 function StockPage() {
 
   const symbol = useParams().stock;
-
+  const navigate = useNavigate();
   const [chartData, setChartData] = useState({});
 
   useEffect(() => {
@@ -97,13 +97,18 @@ function StockPage() {
 
     fetchData();
 
-  }, [symbol]);
+  }, [symbol], [chartData]);
+
+  // const handleStockSelection = (symbol) => {
+  //   navigate(`stock/${symbol}`);
+  // };
 
   return (
     <div>
       { chartData &&
-      <div>
-        <StockChart chartData={chartData} symbol={symbol}/>
+      <div className='chart-container d-flex justify-content-center'>
+        <FaArrowCircleLeft className='btn-return' onClick={() => navigate('/')} />
+        <StockChart chartData={chartData} symbol={symbol} />
       </div> }
     </div>
   )

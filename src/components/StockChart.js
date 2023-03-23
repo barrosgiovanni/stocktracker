@@ -64,14 +64,14 @@ function StockChart({ chartData, symbol }) {
   };
 
   return (
-    <div className='chart-display mt-5 p-4 shadow-sm'>
+    <div className='chart-display mt-5 shadow-sm'>
       <Chart
         options={options}
         series={series}
         type='area'
         width='100%'
       />
-      <div className='interval-buttons mt-3'>
+      <div className='interval-buttons mt-2'>
         <button
           onClick={() => setInterval('24h')}
           className={renderButtonSelection('24h')}>Day</button>
