@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
-import { useGlobalContext } from '../context/AppContext';
 import finnHub from '../apis/finnHub';
 import StockChart from "../components/StockChart";
 import StockDetails from "../components/StockDetails";
@@ -13,15 +12,16 @@ const formatData = (data) => {
       y: Math.floor(data.c[index] * 100) / 100
     }
   })
-}
+};
 
 function StockPage() {
 
   const symbol = useParams().stock;
   const navigate = useNavigate();
-  const { chartData, setChartData, interval } = useGlobalContext();
+  const [ chartData, setChartData ] = useState();
 
   useEffect(() => {
+
     const fetchData = async () => {
 
       const date = new Date();
@@ -75,15 +75,20 @@ function StockPage() {
               resolution: 'W'
             }
           })
-        ])
+        ]);
+
+        const dailySeries = formatData(responses[0].data);
+        const weeklySeries = formatData(responses[1].data);
+        const monthlySeries = formatData(responses[2].data);
+        const yearlySeries = formatData(responses[3].data);
 
         const updatedChartData = {
-          ...chartData,
-          day: formatData(responses[0].data),
-          week: formatData(responses[1].data),
-          month: formatData(responses[2].data),
-          year: formatData(responses[3].data)
+          day: dailySeries,
+          week: weeklySeries,
+          month: monthlySeries,
+          year: yearlySeries
         }
+
         setChartData(updatedChartData);
 
       } catch (error) {
@@ -91,15 +96,15 @@ function StockPage() {
       }
     };
     fetchData();
-  }, [symbol], [chartData], [interval]);
+  }, [symbol]);
 
   return (
     <div>
       { chartData &&
-      <div className='chart-container d-flex justify-content-center'>
+      (<div className='chart-container d-flex justify-content-center'>
         <FaArrowCircleLeft className='btn-return' onClick={() => navigate('/')} />
         <StockChart symbol={symbol} chartData={chartData} />
-      </div> }
+      </div>)}
       <StockDetails symbol={symbol} />
     </div>
   )

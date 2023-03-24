@@ -42,15 +42,17 @@ function SearchBar() {
 
   const renderSearchResults = searchList.map((result) => {
     return (
-      <li className='dropdown-item d-flex justify-content-between align-middle' key={result.symbol}>
-        <div className='stock-title' onClick={() => handleNavigation(result.symbol)}>{result.description} ({result.symbol})</div>
-        <button className='btn-add' onClick={ () => addStockToWatchList(result.symbol)}>+ Add</button>
+      <li className='dropdown-item d-flex justify-content-between align-middle' key={result.symbol} onClick={() => handleNavigation(result.symbol)}>
+        <div className='stock-title'>{result.description} ({result.symbol})</div>
+        <button className='btn-add' onClick={(e) => {
+          e.stopPropagation()
+          addStockToWatchList(result.symbol)}}>+ Add</button>
       </li>
     )
   });
 
   return (
-    <div className='w-100 pb-4 pt-5 rounded mx-auto d-flex justify-content-center'>
+    <div className='search-bar w-100 pb-4 pt-5 rounded mx-auto d-flex justify-content-center'>
       <div className='form-floating dropdown'>
         <input
           id='search'

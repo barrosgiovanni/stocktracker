@@ -1,10 +1,12 @@
 import { useGlobalContext } from "../context/AppContext";
 import Chart from "react-apexcharts";
 
-function StockChart({ symbol }) {
+function StockChart({ symbol, chartData }) {
 
-  const { chartData, interval, setInterval } = useGlobalContext();
+  const { interval, setInterval } = useGlobalContext();
   const { day, week, month, year } = chartData;
+
+  const uniqueId = require('generate-unique-id');
 
   const defineTimeFormat = () => {
     switch (interval) {
@@ -21,26 +23,22 @@ function StockChart({ symbol }) {
     }
   };
 
-  const timeFormat = defineTimeFormat();
-
-  // console.log(chartData);
-  // console.log(chartData.day === true || chartData.day === false ? 'true' : 'false');
-
-  // let color = '#fff';
-  // color = defineTimeFormat()[defineTimeFormat().length - 1].y - defineTimeFormat()[0].y > 0 ?
-  // '#26C281' : '#ED3419'
-  // console.log(color);
+  let color = '#fff';
+  color = defineTimeFormat()[defineTimeFormat().length - 1].y - defineTimeFormat()[0].y > 0 ?
+  '#26C281' : '#ED3419'
 
   const options = {
+    colors: [color],
     title: {
       text: symbol,
       align: 'center',
       style: {
-        fontSize: '28px'
+        fontSize: '28px',
+        color: '#e4dcdc'
       }
     },
     chart: {
-      id: 'stock data',
+      id: uniqueId(),
       animations: {
         speed: 1200
       }
@@ -48,7 +46,17 @@ function StockChart({ symbol }) {
     xaxis: {
       type: 'datetime',
       labels: {
-        datetimeUTC: false
+        datetimeUTC: false,
+        style: {
+          colors: '#e4dcdc'
+        }
+      }
+    },
+    yaxis: {
+      labels: {
+        style: {
+          colors: '#e4dcdc'
+        }
       }
     },
     tooltip: {
@@ -60,7 +68,7 @@ function StockChart({ symbol }) {
 
   const series = [{
     name: symbol,
-    data: timeFormat
+    data: defineTimeFormat()
   }];
 
   const renderButtonSelection = (button) => {

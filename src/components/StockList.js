@@ -55,7 +55,7 @@ function StockList() {
           <td className='text-center'>{Math.floor(stock.l * 100) / 100}</td>
           <td className='text-center'>{Math.floor(stock.o * 100) / 100}</td>
           <td className='text-center'>{Math.floor(stock.pc * 100) / 100}</td>
-          <td className= 'display-buttons me-0 px-0'>
+          <td className= 'display-buttons mx-0 px-0'>
             <button className="btn-delete mx-1"
               onClick={(e) => {
                 e.stopPropagation()
@@ -76,15 +76,15 @@ function StockList() {
       <table className='table hover mt-5'>
         <thead className='table-head'>
           <tr>
-            <th scope='col'>Symbol</th>
-            <th className='text-center' scope='col'>Price</th>
-            <th className='text-center' scope='col'>Change</th>
-            <th className='text-center' scope='col'>Change%</th>
-            <th className='text-center' scope='col'>High</th>
-            <th className='text-center' scope='col'>Low</th>
-            <th className='text-center' scope='col'>Open</th>
-            <th className='text-center me-0' scope='col'>Close</th>
-            <th className=" text-center mx-0 px-0"></th>
+            <th className='text-start py-2' scope='col'>Symbol</th>
+            <th className='text-center py-2' scope='col'>Price</th>
+            <th className='text-center py-2' scope='col'>Change</th>
+            <th className='text-center py-2' scope='col'>% Change</th>
+            <th className='text-center py-2' scope='col'>High</th>
+            <th className='text-center py-2' scope='col'>Low</th>
+            <th className='text-center py-2' scope='col'>Open</th>
+            <th className='text-center py-2' scope='col'>Close</th>
+            <th className="display-action text-center mx-0 px-0" scope='col'>Action</th>
           </tr>
         </thead>
         <tbody>

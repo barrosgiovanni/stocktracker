@@ -4,12 +4,11 @@ const AppContext = React.createContext();
 
 function AppProvider({ children }) {
 
-  const [watchList, setWatchList] = useState(['GOOGL', 'MSFT', 'AMZN']);
+  const [watchList, setWatchList] = useState(['AAPL', 'MSFT', 'AMZN', 'NVDA', 'GOOGL', 'TSLA', 'META', 'XOM', 'JNJ', 'ABBV', 'CVX', 'AVGO', 'MRK', 'LLY', 'PEP', 'KO', 'PFE']);
   const [stocks, setStocks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchList, setSearchList] = useState([]);
   const [interval, setInterval] = useState('1d');
-  const [chartData, setChartData] = useState({});
 
   useEffect(() => {
     localStorage.setItem('watchList', watchList)
@@ -51,9 +50,7 @@ function AppProvider({ children }) {
         addStockToWatchList,
         deleteFromWatchList,
         interval,
-        setInterval,
-        chartData,
-        setChartData
+        setInterval
       }}>
       { children }
     </AppContext.Provider>
