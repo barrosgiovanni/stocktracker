@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 
 const AppContext = React.createContext();
 
@@ -10,6 +10,11 @@ function AppProvider({ children }) {
   const [searchList, setSearchList] = useState([]);
   const [interval, setInterval] = useState('1d');
   const [chartData, setChartData] = useState({});
+
+  useEffect(() => {
+    localStorage.setItem('watchList', watchList)
+  }, [watchList])
+
 
   const addStockToWatchList = (newStock) => {
 
