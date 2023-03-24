@@ -1,7 +1,7 @@
 
-* {
+/* * {
   border: 1px solid red;
-}
+} */
 
 .table-container {
   display: flex;
@@ -9,11 +9,15 @@
 }
 
 .table {
-  width: 84%;
+  width: 96%;
 }
 
 .table-head {
   color: rgb(79, 89, 102);
+}
+
+.table-row {
+  margin: 0px;
 }
 
 .table-row:hover {
@@ -22,6 +26,10 @@
 
 .table-row th {
   cursor: pointer;
+}
+
+.stock-symbol {
+  width: 100px;
 }
 
 .form-control {
@@ -53,6 +61,10 @@
   padding: 4px 8px;
 }
 
+.display-buttons {
+  width: 150px;
+}
+
 .btn-delete {
   background-color: rgb(217, 15, 15);
   color: #fff;
@@ -61,11 +73,19 @@
   font-size: smaller;
   padding: 4px 8px;
   z-index: 1;
+  visibility: hidden;
+}
+
+.table-row:hover .btn-delete {
+  visibility: visible;
+}
+
+.table-row:hover .btn-details {
+  visibility: visible;
 }
 
 .btn-interval {
   background-color: #fff;
-  /* border: 1px solid black; */
   font-size: smaller;
   border-radius: 6px;
   padding: 4px 8px;
@@ -84,6 +104,17 @@
   border-radius: 6px;
   padding: 4px 8px;
   margin: 4px;
+}
+
+.btn-details {
+  background-color: #0074d9;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: smaller;
+  padding: 4px 8px;
+  z-index: 1;
+  visibility: hidden;
 }
 
 .chart-display {

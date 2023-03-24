@@ -4,7 +4,7 @@ const AppContext = React.createContext();
 
 function AppProvider({ children }) {
 
-  const [ watchList, setWatchList ] = useState(['GOOGL', 'MSFT', 'AMZN']);
+  const [watchList, setWatchList] = useState(['GOOGL', 'MSFT', 'AMZN']);
   const [stocks, setStocks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchList, setSearchList] = useState([]);
@@ -12,9 +12,17 @@ function AppProvider({ children }) {
   const [chartData, setChartData] = useState({});
 
   const addStockToWatchList = (newStock) => {
-    const updatedWatchList = [...watchList, newStock];
-    setWatchList(updatedWatchList);
-    setSearchTerm('');
+
+    const isIncluded = watchList.filter((stock) => {
+      return stock === newStock;
+    })
+
+    if (isIncluded.length === 0) {
+      const updatedWatchList = [...watchList, newStock];
+      setWatchList(updatedWatchList);
+      setSearchTerm('');
+    }
+
   }
 
   const deleteFromWatchList = (removedStock) => {

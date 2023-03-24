@@ -3,13 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useGlobalContext } from '../context/AppContext';
 import finnHub from '../apis/finnHub';
 import StockChart from "../components/StockChart";
+import StockDetails from "../components/StockDetails";
 import { FaArrowCircleLeft } from "react-icons/fa";
 
 const formatData = (data) => {
   return data.t.map((record, index) => {
     return {
       x: record * 1000,
-      y: Math.floor(data.c[index])
+      y: Math.floor(data.c[index] * 100) / 100
     }
   })
 }
@@ -99,6 +100,7 @@ function StockPage() {
         <FaArrowCircleLeft className='btn-return' onClick={() => navigate('/')} />
         <StockChart symbol={symbol} chartData={chartData} />
       </div> }
+      <StockDetails symbol={symbol} />
     </div>
   )
 }

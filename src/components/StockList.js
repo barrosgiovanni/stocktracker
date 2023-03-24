@@ -42,8 +42,8 @@ function StockList() {
 
   const renderStocks = stocks.map((stock) => {
     return (
-        <tr className='table-row' key={stock.symbol}>
-          <th scope='row' onClick={() => handleStockSelection(stock.symbol)}>{stock.symbol}</th>
+        <tr className='table-row' onClick={() => handleStockSelection(stock.symbol)} key={stock.symbol}>
+          <th className='stock-symbol' scope='row'>{stock.symbol}</th>
           <td className='text-center'>{Math.floor(stock.c * 100) / 100}</td>
           {stock.d >= 0 ?
             <td className='text-success text-center'>{Math.floor(stock.d * 100) / 100}<BsFillCaretUpFill /></td> :
@@ -55,7 +55,18 @@ function StockList() {
           <td className='text-center'>{Math.floor(stock.l * 100) / 100}</td>
           <td className='text-center'>{Math.floor(stock.o * 100) / 100}</td>
           <td className='text-center'>{Math.floor(stock.pc * 100) / 100}</td>
-          <td className= 'd-flex justify-content-end me-3 px-0'><button className="btn-delete mx-0 px=0" onClick={() => deleteFromWatchList(stock.symbol)}>- Delete</button></td>
+          <td className= 'display-buttons me-0 px-0'>
+            <button className="btn-delete mx-1"
+              onClick={(e) => {
+                e.stopPropagation()
+                deleteFromWatchList(stock.symbol)
+              }}> - Remove </button>
+            <button className="btn-details mx-1"
+              onClick={(e) => {
+                e.stopPropagation()
+                handleStockSelection(stock.symbol)
+              }}> + Info </button>
+          </td>
         </tr>
     )
   });
@@ -72,7 +83,7 @@ function StockList() {
             <th className='text-center' scope='col'>High</th>
             <th className='text-center' scope='col'>Low</th>
             <th className='text-center' scope='col'>Open</th>
-            <th className='text-center' scope='col'>Close</th>
+            <th className='text-center me-0' scope='col'>Close</th>
             <th className=" text-center mx-0 px-0"></th>
           </tr>
         </thead>
