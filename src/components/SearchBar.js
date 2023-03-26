@@ -5,7 +5,7 @@ import finnHub from "../apis/finnHub";
 
 function SearchBar() {
 
-  const {searchTerm, setSearchTerm, searchList, setSearchList, addStockToWatchList} = useGlobalContext();
+  const {searchTerm, setSearchTerm, searchList, setSearchList, watchList, addStockToWatchList, deleteFromWatchList} = useGlobalContext();
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -40,13 +40,23 @@ function SearchBar() {
     navigate(`stock/${symbol}`);
   };
 
+  const renderButton = (symbol) => {
+    if (watchList.includes(symbol)) {
+      return <button className='btn-delete' onClick={(e) => {
+        e.stopPropagation()
+        deleteFromWatchList(symbol)}}>- Remove</button>
+    } else {
+      return <button className='btn-add' onClick={(e) => {
+        e.stopPropagation()
+        addStockToWatchList(symbol)}}>+ Add</button>
+    }
+  };
+
   const renderSearchResults = searchList.map((result) => {
     return (
       <li className='dropdown-item d-flex justify-content-between align-middle' key={result.symbol} onClick={() => handleNavigation(result.symbol)}>
         <div className='stock-title'>{result.description} ({result.symbol})</div>
-        <button className='btn-add' onClick={(e) => {
-          e.stopPropagation()
-          addStockToWatchList(result.symbol)}}>+ Add</button>
+        {renderButton(result.symbol)}
       </li>
     )
   });

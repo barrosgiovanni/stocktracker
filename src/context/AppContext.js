@@ -4,7 +4,7 @@ const AppContext = React.createContext();
 
 function AppProvider({ children }) {
 
-  const [watchList, setWatchList] = useState(['AAPL', 'MSFT', 'AMZN', 'NVDA', 'GOOGL', 'TSLA', 'META', 'XOM', 'JNJ', 'ABBV', 'CVX', 'AVGO', 'MRK', 'LLY', 'PEP', 'KO', 'PFE']);
+  const [watchList, setWatchList] = useState(['AAPL', 'MSFT', 'AMZN', 'NVDA', 'GOOGL', 'TSLA', 'META']);
   const [stocks, setStocks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchList, setSearchList] = useState([]);
@@ -25,6 +25,8 @@ function AppProvider({ children }) {
       const updatedWatchList = [...watchList, newStock];
       setWatchList(updatedWatchList);
       setSearchTerm('');
+    } else {
+      alert('This stock is already being tracked!')
     }
 
   }
