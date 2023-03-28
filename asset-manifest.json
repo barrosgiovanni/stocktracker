@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/stocktracker/static/css/main.42e399bc.css",
+    "main.js": "/stocktracker/static/js/main.4ab4fc82.js",
+    "static/media/stocktrackerlogo.png": "/stocktracker/static/media/stocktrackerlogo.5b904bbcd2dd9bbf9df0.png",
+    "index.html": "/stocktracker/index.html",
+    "main.42e399bc.css.map": "/stocktracker/static/css/main.42e399bc.css.map",
+    "main.4ab4fc82.js.map": "/stocktracker/static/js/main.4ab4fc82.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.42e399bc.css",
+    "static/js/main.4ab4fc82.js"
+  ]
+}
