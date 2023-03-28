@@ -4,7 +4,7 @@ const AppContext = React.createContext();
 
 function AppProvider({ children }) {
 
-  const [watchList, setWatchList] = useState(['AAPL', 'MSFT', 'AMZN', 'NVDA', 'GOOGL', 'TSLA', 'META']);
+  const [watchList, setWatchList] = useState(['AAPL', 'MSFT', 'AMZN']);
   const [stocks, setStocks] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchList, setSearchList] = useState([]);
